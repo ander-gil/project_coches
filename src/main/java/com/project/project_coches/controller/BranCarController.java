@@ -40,7 +40,7 @@ public class BranCarController {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(iBrandCarService.save(newBrandCar));
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
