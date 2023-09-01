@@ -23,7 +23,7 @@ public class BranCarController {
         this.iBrandCarService = iBrandCarService;
     }
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<List<BrandCarPojo>> getAll(){
         return ResponseEntity.status(HttpStatus.OK).body(iBrandCarService.getAll());
         // return new ResponseEntity<>(iBrandCarService.getAll(), HttpStatus.OK); Alternativa para crear ResponseEntity
@@ -34,16 +34,29 @@ public class BranCarController {
         return ResponseEntity.of(iBrandCarService.getBrandCar(id));
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<BrandCarPojo> save (@RequestBody  BrandCarPojo newBrandCar){
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(iBrandCarService.save(newBrandCar));
         }catch (Exception e){
+            //corregir
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
+    /**
+     * Actualiza una marca coche
+     * @param brandCarPojoUpdate marca coche a guardar
+     * @return Optional con marca coche actualizada
+     */
+    @PatchMapping()
+    public ResponseEntity<BrandCarPojo> update(@RequestBody BrandCarPojo brandCarPojoUpdate){
+        return ResponseEntity.of(iBrandCarService.update(brandCarPojoUpdate));
+    }
 
-
+    @DeleteMapping(path="/{id}")
+    public ResponseEntity<Boolean> delete (@PathVariable Integer id){
+        return new ResponseEntity<>(this.iBrandCarService.delete(id) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    }
 }
